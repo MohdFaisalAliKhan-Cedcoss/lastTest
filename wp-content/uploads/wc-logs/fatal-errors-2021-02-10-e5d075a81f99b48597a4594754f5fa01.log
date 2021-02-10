@@ -1,0 +1,36 @@
+2021-02-10T06:57:16+00:00 CRITICAL Uncaught ArgumentCountError: Too few arguments to function get_option(), 0 passed in /home/cedcoss/Local Sites/lasttask/app/public/wp-content/plugins/shortcode-cpt/admin/class-shortcode-cpt-admin.php on line 264 and at least 1 expected in /home/cedcoss/Local Sites/lasttask/app/public/wp-includes/option.php:31
+Stack trace:
+#0 /home/cedcoss/Local Sites/lasttask/app/public/wp-content/plugins/shortcode-cpt/admin/class-shortcode-cpt-admin.php(264): get_option()
+#1 /home/cedcoss/Local Sites/lasttask/app/public/wp-includes/class-wp-hook.php(287): Shortcode_cpt_Admin->settings_tab('')
+#2 /home/cedcoss/Local Sites/lasttask/app/public/wp-includes/class-wp-hook.php(311): WP_Hook->apply_filters('', Array)
+#3 /home/cedcoss/Local Sites/lasttask/app/public/wp-includes/plugin.php(484): WP_Hook->do_action(Array)
+#4 /home/cedcoss/Local Sites/lasttask/app/public/wp-content/plugins/woocommerce/includes/admin/views/html-admin-settings.php(41): do_action('woocommerce_set...')
+#5 /home/cedcoss/Local Sites/lasttask/app/public/wp-con in /home/cedcoss/Local Sites/lasttask/app/public/wp-includes/option.php on line 31
+
+2021-02-10T07:01:28+00:00 CRITICAL Uncaught ArgumentCountError: Too few arguments to function get_option(), 0 passed in /home/cedcoss/Local Sites/lasttask/app/public/wp-content/plugins/shortcode-cpt/admin/class-shortcode-cpt-admin.php on line 264 and at least 1 expected in /home/cedcoss/Local Sites/lasttask/app/public/wp-includes/option.php:31
+Stack trace:
+#0 /home/cedcoss/Local Sites/lasttask/app/public/wp-content/plugins/shortcode-cpt/admin/class-shortcode-cpt-admin.php(264): get_option()
+#1 /home/cedcoss/Local Sites/lasttask/app/public/wp-includes/class-wp-hook.php(287): Shortcode_cpt_Admin->settings_tab('')
+#2 /home/cedcoss/Local Sites/lasttask/app/public/wp-includes/class-wp-hook.php(311): WP_Hook->apply_filters('', Array)
+#3 /home/cedcoss/Local Sites/lasttask/app/public/wp-includes/plugin.php(484): WP_Hook->do_action(Array)
+#4 /home/cedcoss/Local Sites/lasttask/app/public/wp-content/plugins/woocommerce/includes/admin/views/html-admin-settings.php(41): do_action('woocommerce_set...')
+#5 /home/cedcoss/Local Sites/lasttask/app/public/wp-con in /home/cedcoss/Local Sites/lasttask/app/public/wp-includes/option.php on line 31
+
+2021-02-10T07:01:48+00:00 CRITICAL Uncaught ArgumentCountError: Too few arguments to function get_settings(), 0 passed in /home/cedcoss/Local Sites/lasttask/app/public/wp-content/plugins/shortcode-cpt/admin/class-shortcode-cpt-admin.php on line 264 and exactly 1 expected in /home/cedcoss/Local Sites/lasttask/app/public/wp-includes/deprecated.php:847
+Stack trace:
+#0 /home/cedcoss/Local Sites/lasttask/app/public/wp-content/plugins/shortcode-cpt/admin/class-shortcode-cpt-admin.php(264): get_settings()
+#1 /home/cedcoss/Local Sites/lasttask/app/public/wp-includes/class-wp-hook.php(287): Shortcode_cpt_Admin->settings_tab('')
+#2 /home/cedcoss/Local Sites/lasttask/app/public/wp-includes/class-wp-hook.php(311): WP_Hook->apply_filters('', Array)
+#3 /home/cedcoss/Local Sites/lasttask/app/public/wp-includes/plugin.php(484): WP_Hook->do_action(Array)
+#4 /home/cedcoss/Local Sites/lasttask/app/public/wp-content/plugins/woocommerce/includes/admin/views/html-admin-settings.php(41): do_action('woocommerce_set...')
+#5 /home/cedcoss/Local Sites/lasttask/app/publi in /home/cedcoss/Local Sites/lasttask/app/public/wp-includes/deprecated.php on line 847
+
+2021-02-10T07:01:49+00:00 CRITICAL Uncaught ArgumentCountError: Too few arguments to function get_settings(), 0 passed in /home/cedcoss/Local Sites/lasttask/app/public/wp-content/plugins/shortcode-cpt/admin/class-shortcode-cpt-admin.php on line 264 and exactly 1 expected in /home/cedcoss/Local Sites/lasttask/app/public/wp-includes/deprecated.php:847
+Stack trace:
+#0 /home/cedcoss/Local Sites/lasttask/app/public/wp-content/plugins/shortcode-cpt/admin/class-shortcode-cpt-admin.php(264): get_settings()
+#1 /home/cedcoss/Local Sites/lasttask/app/public/wp-includes/class-wp-hook.php(287): Shortcode_cpt_Admin->settings_tab('')
+#2 /home/cedcoss/Local Sites/lasttask/app/public/wp-includes/class-wp-hook.php(311): WP_Hook->apply_filters('', Array)
+#3 /home/cedcoss/Local Sites/lasttask/app/public/wp-includes/plugin.php(484): WP_Hook->do_action(Array)
+#4 /home/cedcoss/Local Sites/lasttask/app/public/wp-content/plugins/woocommerce/includes/admin/views/html-admin-settings.php(41): do_action('woocommerce_set...')
+#5 /home/cedcoss/Local Sites/lasttask/app/publi in /home/cedcoss/Local Sites/lasttask/app/public/wp-includes/deprecated.php on line 847
+

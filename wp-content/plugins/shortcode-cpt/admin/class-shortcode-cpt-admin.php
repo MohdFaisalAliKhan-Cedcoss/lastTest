@@ -287,17 +287,23 @@ class Shortcode_cpt_Admin {
 				'id'   => 'wc_settings_tab_demo_section_title',
 			),
 			'title' => array(
-				'name' => __( 'URL', 'woo' ),
+				'name' => __( 'API Key', 'woo' ),
 				'type' => 'text',
-				'desc' => __( 'Please enter URL(POST or GET).', 'woo' ),
+				'desc' => __( 'Please enter API Key.', 'woo' ),
 				'id'   => 'wc_settings_tab_demo_title',
 			),
 			'description'   => array(
-				'name'     => __( 'cURL request', 'woo' ),
+				'name'     => __( 'API Secret', 'woo' ),
 				'type'     => 'textarea',
 				'desc'     => __( 'This is a paragraph describing the setting. Lorem ipsum yadda yadda yadda. Lorem ipsum yadda yadda yadda. Lorem ipsum yadda yadda yadda. Lorem ipsum yadda yadda yadda.', 'woocommerce-settings-tab-demo' ),
 				'id'       => 'wc_settings_tab_demo_description',
 				'desc_tip' => true,
+			),
+			'choice' => array(
+				'name' => __( 'Show Additional settings in settings tab', 'woo' ),
+				'type' => 'checkbox',
+				'desc' => __( 'If disabled the additional settings will not show.', 'woo' ),
+				'id'   => 'wc_settings_tab_demo_choice',
 			),
 			'section_end' => array(
 				'type' => 'sectionend',
@@ -307,7 +313,7 @@ class Shortcode_cpt_Admin {
 		return apply_filters( 'wc_settings_tab_demo_settings', $settings );
 	}
 	// ///////////////////////////////////
-	public function misha_product_settings_tabs( $tabs ){
+	public function misha_product_settings_tabs( $tabs ) {
 		//unset( $tabs['inventory'] );
 		$tabs['misha'] = array(
 			'label'    => 'Upload image by Access Token',
@@ -339,6 +345,125 @@ class Shortcode_cpt_Admin {
 		) );
 		echo '</div>';
 	}
-	
+	/**
+	 * Function to check if current screen is product edit screen. If yes, only then show metadata.
+	 */
+	public function check_page_for_wporg_add_custom_box() {
+		$screen = get_current_screen();
+		if ( ! $screen ) {
+			return;
+		}
+		switch ( $screen->id ) {
+			case 'product':
+				$this->wporg_add_custom_box();
+				break;
+		}
+	}
+	/**
+	 * Function used to add a meta box to product edit screen.
+	 */
+	public function wporg_add_custom_box() {
+		if ( get_option( 'wc_settings_tab_demo_choice' ) === 'yes' ) {
+			add_meta_box(
+				'wporg_box_id',                 // Unique ID.
+				'Custom Meta Box Title',      // Box title.
+				array( $this, 'wporg_custom_box_html' )  // Content callback, must be of type callable.
+			);
+		}
+	}
+	/**
+	 * Callback function of upper function.
+	 */
+	public function wporg_custom_box_html( $post ) {
+		// Save attachment ID.
+		wp_enqueue_media();
+		?>
+		<!-- <label for="wporg_field">Description for this field</label>
+		<select name="wporg_field" id="wporg_field" class="postbox">
+			<option value="">Select something...</option>
+			<option value="something">Something</option>
+			<option value="else">Else</option>
+		</select> -->	
+		<div class='image-preview-wrapper'>
+		<img id='image-preview' src='' width='100' height='100' style='max-height: 100px; width: 100px;'>
+		</div>
+		<input id="upload_image_button" type="button" class="button" value="<?php _e( 'Upload image' ); ?>" />
+		<input name='image_attachment_id' id='image_attachment_id' value=''>
+		<input type="submit" name="submit_image_selector" value="Save" class="button-primary">
+		<!-- <input type="button" class="button insert-media add_media" value="Add Media" id="imagetosend" name="imagetosend"> -->
+		<?php
+	}
+	/**
+	 * To save the data from custom meta box.
+	 */
+	public function wporg_save_postdata( $post_id ) {
+		// if ( array_key_exists( 'wporg_field', $_POST ) ) {
+		// 	update_post_meta(
+		// 		$post_id,
+		// 		'_wporg_meta_key',
+		// 		$_POST['wporg_field']
+		// 	);
+		// }
+		if ( isset( $_POST['submit_image_selector'] ) && isset( $_POST['image_attachment_id'] ) ) :
+			// update_option( 'faisal_option', absint( $_POST['image_attachment_id'] ) );
+			update_post_meta(
+				$post_id,
+				'faisal_meta_key',
+				$_POST['image_attachment_id']
+			);
+		endif;
+	}
+	public function media_selector_print_scripts() {
+
+		$my_saved_attachment_post_id = get_option( 'media_selector_attachment_id', 0 );
+		?><script type='text/javascript'>
+			jQuery( document ).ready( function( $ ) {
+				// Uploading files
+				var file_frame;
+				var wp_media_post_id = wp.media.model.settings.post.id; // Store the old id
+				var set_to_post_id = <?php echo $my_saved_attachment_post_id; ?>; // Set this
+				jQuery('#upload_image_button').on('click', function( event ){
+					event.preventDefault();
+					// If the media frame already exists, reopen it.
+					if ( file_frame ) {
+						// Set the post ID to what we want
+						file_frame.uploader.uploader.param( 'post_id', set_to_post_id );
+						// Open frame
+						file_frame.open();
+						return;
+					} else {
+						// Set the wp.media post id so the uploader grabs the ID we want when initialised
+						wp.media.model.settings.post.id = set_to_post_id;
+					}
+					// Create the media frame.
+					file_frame = wp.media.frames.file_frame = wp.media({
+						title: 'Select a image to upload',
+						button: {
+							text: 'Use this image',
+						},
+						multiple: false	// Set to true to allow multiple files to be selected
+					});
+					// When an image is selected, run a callback.
+					file_frame.on( 'select', function() {
+						// We set multiple to false so only get one image from the uploader
+						attachment = file_frame.state().get('selection').first().toJSON();
+						// Do something with attachment.id and/or attachment.url here
+						$( '#image-preview' ).attr( 'src', attachment.url ).css( 'width', 'auto' );
+						$( '#image_attachment_id' ).val( attachment.url );
+						// Restore the main post ID
+						wp.media.model.settings.post.id = wp_media_post_id;
+					});
+						// Finally, open the modal
+						file_frame.open();
+				});
+				// Restore the main ID when the add media button is pressed
+				jQuery( 'a.add_media' ).on( 'click', function() {
+					wp.media.model.settings.post.id = wp_media_post_id;
+				});
+			});
+		</script>
+		<?php
+	}
+
 
 }

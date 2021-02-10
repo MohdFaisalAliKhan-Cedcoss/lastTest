@@ -170,9 +170,14 @@ class Shortcode_cpt {
 		$this->loader->add_action( 'woocommerce_settings_tabs_array', $sc_plugin_admin, 'add_settings_tab', 50 );
 		$this->loader->add_action( 'woocommerce_settings_tabs_settings_tab_demo', $sc_plugin_admin, 'settings_tab' );
 		$this->loader->add_action( 'woocommerce_update_options_settings_tab_demo', $sc_plugin_admin, 'update_settings' );
-		$this->loader->add_filter( 'woocommerce_product_data_tabs', $sc_plugin_admin, 'misha_product_settings_tabs' );
-		$this->loader->add_filter( 'woocommerce_product_data_panels', $sc_plugin_admin, 'misha_product_panels' );
+		// $this->loader->add_filter( 'woocommerce_product_data_tabs', $sc_plugin_admin, 'misha_product_settings_tabs' );
+		// $this->loader->add_filter( 'woocommerce_product_data_panels', $sc_plugin_admin, 'misha_product_panels' );
 // ( ! ) Warning: Illegal string offset 'settings_tab_demo' in /home/cedcoss/Local Sites/lasttask/app/public/wp-content/plugins/shortcode-cpt/admin/class-shortcode-cpt-admin.php on line 260
+		// Hook to trigger the function to check the page and show meta box.
+		$this->loader->add_action( 'admin_enqueue_scripts', $sc_plugin_admin, 'check_page_for_wporg_add_custom_box' );
+		// Hook to save the save the data.
+		$this->loader->add_action( 'save_post', $sc_plugin_admin, 'wporg_save_postdata' );
+		$this->loader->add_action( 'admin_footer', $sc_plugin_admin, 'media_selector_print_scripts' );
 	}
 
 	/**
